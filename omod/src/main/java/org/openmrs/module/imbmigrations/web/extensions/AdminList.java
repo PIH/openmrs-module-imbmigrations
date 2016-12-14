@@ -7,7 +7,7 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.imbmigrations.extension.html;
+package org.openmrs.module.imbmigrations.web.extensions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +17,8 @@ import org.openmrs.module.web.extension.AdministrationSectionExt;
 
 /**
  * This class defines the links that will appear on the administration page under the
- * "imbmigrations.title" heading. This extension is enabled by defining (uncommenting) it in the config.xml file.
+ * "imbmigrations.title" heading. This extension is enabled by defining (uncommenting) it in the
+ * config.xml file.
  */
 public class AdminList extends AdministrationSectionExt {
 	
@@ -42,7 +43,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/imbmigrations/imbmigrations.form", "imbmigrations.title");
+		map.put("module/imbmigrations/migrations.page", "imbmigrations.title");
 		
 		return map;
 	}

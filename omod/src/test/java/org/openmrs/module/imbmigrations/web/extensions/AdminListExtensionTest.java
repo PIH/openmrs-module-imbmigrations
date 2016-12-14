@@ -7,13 +7,13 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.module.imbmigrations;
+package org.openmrs.module.imbmigrations.web.extensions;
 
 import java.util.Map;
 
 import org.junit.Test;
 import org.openmrs.module.Extension;
-import org.openmrs.module.imbmigrations.extension.html.AdminList;
+import org.openmrs.module.imbmigrations.web.extensions.AdminList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -41,7 +41,6 @@ public class AdminListExtensionTest {
 	@Test
 	public void testMediaTypeIsHtml() {
 		AdminList ext = new AdminList();
-		
 		assertThat(ext.getMediaType(), is(Extension.MEDIA_TYPE.html));
 	}
 	

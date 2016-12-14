@@ -25,34 +25,4 @@
 
     <context:component-scan base-package="org.openmrs.module.imbmigrations" />
 
-    <!-- Wraps IMBmigrationsService methods in DB transactions and OpenMRS interceptors,
-    which set audit info like dateCreated, changedBy, etc.-->
-    <bean id="imbmigrations.IMBmigrationsService"
-            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager">
-            <ref bean="transactionManager" />
-        </property>
-        <property name="target">
-            <bean class="org.openmrs.module.imbmigrations.api.impl.IMBmigrationsServiceImpl">
-                <property name="dao" ref="imbmigrations.IMBmigrationsDao" />
-            </bean>
-        </property>
-        <property name="preInterceptors">
-            <ref bean="serviceInterceptors" />
-        </property>
-        <property name="transactionAttributeSource">
-            <ref bean="transactionAttributeSource" />
-        </property>
-    </bean>
-
-    <!-- Adds IMBmigrationsService to OpenMRS context so it can be accessed
-    calling Context.getService(IMBmigrationsService.class) -->
-    <bean parent="serviceContext">
-        <property name="moduleService">
-            <list>
-                <value>org.openmrs.module.imbmigrations.api.IMBmigrationsService</value>
-                <ref bean="imbmigrations.IMBmigrationsService" />
-            </list>
-        </property>
-    </bean>
 </beans>

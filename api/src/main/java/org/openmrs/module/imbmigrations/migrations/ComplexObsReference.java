@@ -13,15 +13,17 @@ import org.openmrs.util.OpenmrsUtil;
 public class ComplexObsReference {
 
 	private String obsUuid;
+	private Integer obsId;
 	private Integer patientId;
 	private Date encounterDate;
 	private String initialValueComplex;
 
-	public ComplexObsReference(String obsUuid, Integer patientId, Date encounterDate, String initialValueComplex) {
+	public ComplexObsReference(String obsUuid, Integer obsId, Integer patientId, Date encounterDate, String valueComplex) {
 		this.obsUuid = obsUuid;
+		this.obsId = obsId;
 		this.patientId = patientId;
 		this.encounterDate = encounterDate;
-		this.initialValueComplex = initialValueComplex;
+		this.initialValueComplex = valueComplex;
 	}
 
 	public String getInitialFileName() {
@@ -83,31 +85,19 @@ public class ComplexObsReference {
 		return obsUuid;
 	}
 
-	public void setObsUuid(String obsUuid) {
-		this.obsUuid = obsUuid;
+	public Integer getObsId() {
+		return obsId;
 	}
 
 	public Integer getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(Integer patientId) {
-		this.patientId = patientId;
-	}
-
 	public Date getEncounterDate() {
 		return encounterDate;
 	}
 
-	public void setEncounterDate(Date encounterDate) {
-		this.encounterDate = encounterDate;
-	}
-
 	public String getInitialValueComplex() {
 		return initialValueComplex;
-	}
-
-	public void setInitialValueComplex(String initialValueComplex) {
-		this.initialValueComplex = initialValueComplex;
 	}
 }

@@ -52,16 +52,17 @@ public class ComplexObsMigrator {
 		// Next get all of the complex obs from the DB
 		AdministrationService as = Context.getAdministrationService();
 		StringBuilder query = new StringBuilder();
-		query.append("select o.uuid, o.person_id, e.encounter_datetime, o.value_complex ");
+		query.append("select o.uuid, o.obs_id, o.person_id, e.encounter_datetime, o.value_complex ");
 		query.append("from   obs o left join encounter e on o.encounter_id = e.encounter_id ");
 		query.append("where  o.value_complex is not null ");
 		List<List<Object>> rows = as.executeSQL(query.toString(), true);
 		for (List<Object> row : rows) {
 			String uuid = (String) row.get(0);
-			Integer patientId = (Integer) row.get(1);
-			Date encounterDate = (Date) row.get(2);
-			String valueComplex = (String) row.get(3);
-			ComplexObsReference reference = new ComplexObsReference(uuid, patientId, encounterDate, valueComplex);
+			Integer obsId = (Integer) row.get(1);
+			Integer patientId = (Integer) row.get(2);
+			Date encounterDate = (Date) row.get(3);
+			String valueComplex = (String) row.get(4);
+			ComplexObsReference reference = new ComplexObsReference(uuid, obsId, patientId, encounterDate, valueComplex);
 			List<ComplexObsReference> byValue = complexObsValueMap.get(valueComplex);
 			if (byValue == null) {
 				byValue = new ArrayList<ComplexObsReference>();
@@ -74,7 +75,13 @@ public class ComplexObsMigrator {
 		for (String valueComplex : complexObsValueMap.keySet()) {
 			List<ComplexObsReference> refs = complexObsValueMap.get(valueComplex);
 			if (refs.size() > 1) {
-				multipleObsWithSameValue.put(valueComplex, refs);
+				ComplexObsReference firstRef = refs.get(0);
+				if (!firstRef.getInitialFile().exists()) {
+					obsMissingDataFiles.addAll(refs);
+				}
+				else {
+					multipleObsWithSameValue.put(valueComplex, refs);
+				}
 			}
 			else {
 				ComplexObsReference ref = refs.get(0);
@@ -98,6 +105,10 @@ public class ComplexObsMigrator {
 
 	public List<ComplexObsReference> getValuesForBulkMigration() {
 		return bulkMigration;
+	}
+
+	public Map<String, List<ComplexObsReference>> getObsWithSameValueComplex() {
+		return multipleObsWithSameValue;
 	}
 
 	public Map<String, Integer> getMigrationStatus() {

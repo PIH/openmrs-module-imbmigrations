@@ -43,7 +43,7 @@ public class AdminList extends AdministrationSectionExt {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		map.put("module/imbmigrations/migrations.page", "imbmigrations.title");
+		map.put("module/imbmigrations/migrateComplexObs.list", "Complex Obs Migration");
 		
 		return map;
 	}
